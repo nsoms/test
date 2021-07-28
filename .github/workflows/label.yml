@@ -13,9 +13,16 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}          
           script: |
-            console.log("Current tag name: ",  process.env);
-            console.log(context.repo);
-            console.log(${{secrets.GITHUB_TOKEN}});
+            let re = /refs\/tags\/(v(\d(\.\d*)*))/i;
+            let match = process.env['GITHUB_REF'].match(re);
+            if (match.length == 0)
+              return;
+            let tag_name = match[0],
+              tag_ver = match[1];
+            console.log(match, tag_name, tag_ver);
+            //: 'refs/tags/v0.1.1',
+            //console.log("Current tag name: ",  process.env);
+            //console.log(context.repo);
             /*try {
                 await github.git.deleteRef({
                   owner: context.repo.owner,
