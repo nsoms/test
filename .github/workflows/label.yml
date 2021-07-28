@@ -19,6 +19,8 @@ jobs:
             console.log(re);
             console.log(ref);
             console.log(match);
+            if (match == null)
+              return;
             return;
             if (match.length == 0)
               return;
