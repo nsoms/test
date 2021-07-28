@@ -15,6 +15,7 @@ jobs:
           script: |
             let re = /refs\/tags\/(v(\d(\.\d*)*))/i;
             let match = process.env['GITHUB_REF'].match(re);
+            console.log(match);
             if (match.length == 0)
               return;
             let tag_name = match[0],
