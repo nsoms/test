@@ -21,6 +21,8 @@ jobs:
             console.log(match);
             if (match == null)
               return;
+              
+            return;
 
             let tag_name = match[1],
               tag_ver = match[2],
