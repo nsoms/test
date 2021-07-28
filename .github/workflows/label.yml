@@ -13,9 +13,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}          
           script: |
-            let re = /refs\/tags\/(v(\d(\.\d*)*))/i;
-            let match = process.env['GITHUB_REF'].match(re);
+            var re = /refs\/tags\/(v(\d(\.\d*)*))/i;
+            var match = process.env['GITHUB_REF'].match(re);
             console.log(match);
+            return;
             if (match.length == 0)
               return;
             let tag_name = match[0],
