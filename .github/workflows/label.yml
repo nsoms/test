@@ -24,15 +24,15 @@ jobs:
 
             let tag_name = match[1],
               tag_ver = match[2],
-              base_re = /(v\d*(\.\d*)*)\.\d*/i,
-              base_match = tag_name.match(base_re);
+              base_re = /v\d*(.\d*)*/g,
+              base_match = tag_name.matchAll(base_re);
+            if (base_match[0].length < 2)
+              return;
+            let base_ver = tag_ver.substr(0, tag_ver.length - base_match[0][1].length);
             console.log(tag_name, tag_ver, base_re, base_match);
-            return;
-              
-            //console.log(match, tag_name, tag_ver);
-            //console.log("Environment: ",  process.env);
-            //console.log(context.repo);
-            /*try {
+            console.log('Base ver', base_ver);
+            return ;
+            try {
                 await github.git.deleteRef({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
