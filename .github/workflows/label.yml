@@ -1,0 +1,36 @@
+name: Tagger
+
+on:
+  create:
+    tags:
+
+jobs:
+    movetag:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Advanced tagger. Moves major tag to latest minor tag
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}          
+          script: |
+            console.log("Current tag name: ",  process.env);
+            console.log(context.repo);
+            console.log(${{secrets.GITHUB_TOKEN}});
+            /*try {
+                await github.git.deleteRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: "tags/nightly"
+                })
+            } catch (e) {
+              console.log("The nightly tag doesn't exist yet: " + e)
+            }
+            await github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/nightly",
+              sha: context.sha
+            })*/
+    - uses: actions/labeler@v2
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
