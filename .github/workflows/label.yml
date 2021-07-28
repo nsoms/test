@@ -22,8 +22,6 @@ jobs:
             if (match == null)
               return;
               
-            return;
-
             var tag_name = match[1],
               tag_ver = match[2],
               base_re = /v\d*(\.\d*)*/g,
@@ -34,7 +32,7 @@ jobs:
             console.log(tag_name, tag_ver, base_re, base_match);
             console.log('Base ver', base_ver);
             return ;
-            try {
+            /*try {
                 await github.git.deleteRef({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
