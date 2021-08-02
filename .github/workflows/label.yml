@@ -16,10 +16,10 @@ jobs:
             var re = /refs\/tags\/(v(\d*(\.\d*)*))/i,
               ref = process.env['GITHUB_REF'],
               match = ref.match(re);
+            return;
             console.log('Context: ', context);
             if (match == null)
               return;
-            return;
               
             var tag_name = match[1],
               tag_ver = match[2],
