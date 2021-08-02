@@ -21,7 +21,7 @@ jobs:
             console.log('Context: ', context);
             if (match == null)
               return;
-              
+            /*  
             var tag_name = match[1],
               tag_ver = match[2],
             let base_ver = tag_ver.substr(0, tag_ver.lastIndexOf('.'));
@@ -47,4 +47,4 @@ jobs:
               repo: context.repo.repo,
               ref: "refs/tags/" + base_ver,
               sha: context.sha
-            })
+            }) */
