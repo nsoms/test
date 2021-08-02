@@ -9,7 +9,7 @@ jobs:
     movetag:
       runs-on: ubuntu-latest
       steps:
-      - name: Advanced tagger. Moves major tag to latest minor tag
+      - name: Advanced tagger. Moves major tag to its latest minor tag on tag creation
         uses: actions/github-script@v4
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}          
@@ -17,15 +17,15 @@ jobs:
             var re = /refs\/tags\/(v(\d*(\.\d*)*))/i,
               ref = process.env['GITHUB_REF'],
               match = ref.match(re);
-            console.log('Context: ', context);
-            console.log('Context.repo: ', context.repo);
+            // console.log('Context: ', context);
+            // console.log('Context.repo: ', context.repo);
             if (match == null)
               return;
               
             var tag_name = match[1],
               tag_ver = match[2],
               base_ver = tag_name.substr(0, tag_name.lastIndexOf('.'));
-            console.log(tag_name, tag_ver, base_ver);
+            // console.log(tag_name, tag_ver, base_ver);
             console.log('Base ver', base_ver);
             if (base_ver === '') {
               console.error("Error: Couldn't eval base version");
