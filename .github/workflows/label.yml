@@ -19,12 +19,12 @@ jobs:
             console.log('Context: ', context);
             if (match == null)
               return;
+            return;
               
             var tag_name = match[1],
               tag_ver = match[2],
             let base_ver = tag_ver.substr(0, tag_ver.lastIndexOf('.'));
             console.log(tag_name, tag_ver, base_ver);
-            return;
             console.log('Base ver', base_ver);
             if (base_ver === '') {
               console.error("Error: Couldn't eval base version");
