@@ -18,6 +18,7 @@ jobs:
               ref = process.env['GITHUB_REF'],
               match = ref.match(re);
             console.log('Context: ', context);
+            console.log('Context.repo: ', context.repo);
             if (match == null)
               return;
               
