@@ -16,34 +16,33 @@ jobs:
             var re = /refs\/tags\/(v(\d*(\.\d*)*))/i,
               ref = process.env['GITHUB_REF'],
               match = ref.match(re);
-            console.log(re);
-            console.log(ref);
-            console.log(match);
+            console.log('Context: ', context);
             if (match == null)
               return;
               
             var tag_name = match[1],
               tag_ver = match[2],
-              base_re = /v\d*(\.\d*)*/g,
-              base_match = tag_name.matchAll(base_re);
-            if (base_match[0].length < 2)
-              return;
-            let base_ver = tag_ver.substr(0, tag_ver.length - base_match[0][1].length);
-            console.log(tag_name, tag_ver, base_re, base_match);
+            let base_ver = tag_ver.substr(0, tag_ver.lastIndexOf('.'));
+            console.log(tag_name, tag_ver, base_ver);
             console.log('Base ver', base_ver);
-            return ;
-            /*try {
+            if (base_ver === '') {
+              console.error("Error: Couldn't eval base version");
+              return;
+            }
+
+            try {
                 await github.git.deleteRef({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  ref: "tags/nightly"
+                  ref: "tags/" + base_ver
                 })
             } catch (e) {
-              console.log("The nightly tag doesn't exist yet: " + e)
+              console.log("The base tag doesn't exist yet: " + e);
+              console.log("Creating a new one");
             }
             await github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "refs/tags/nightly",
+              ref: "refs/tags/" + base_ver,
               sha: context.sha
-            })*/
+            })
