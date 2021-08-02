@@ -14,10 +14,10 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}          
           script: |
             console.log('AAA');
+            return;
             var re = /refs\/tags\/(v(\d*(\.\d*)*))/i,
               ref = process.env['GITHUB_REF'],
               match = ref.match(re);
-            return;
             console.log('Context: ', context);
             if (match == null)
               return;
