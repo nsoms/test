@@ -31,20 +31,24 @@ jobs:
               console.error("Error: Couldn't eval base version");
               return;
             }
-            /*
+            
+            let base_ref = "tags/" + base_ver;
+            
             try {
-                await github.git.deleteRef({
-                  owner: context.repository.owner,
-                  repo: context.repository.repo,
-                  ref: "tags/" + base_ver
-                })
+              console.log('Deleting base ref: ', base_ref);
+              await github.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: base_ref
+              })
             } catch (e) {
               console.log("The base tag doesn't exist yet: " + e);
               console.log("Creating a new one");
             }
+            console.log('Recreating base ref: ', base_ref);
             await github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "refs/tags/" + base_ver,
+              ref: "refs/" + base_ref,
               sha: context.sha
-            }) */
+            }) 
