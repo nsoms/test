@@ -56,7 +56,8 @@ jobs:
     - name: Add commit hash to archive
       run: |
            cd test
-           var="# "`git log -n 1 --pretty=format:%h t/a.py.tpl`
+           var="# "`git log -n 1 --pretty=format:%H t/a.py.tpl`
+           echo $var
            cd ..
            sed -i "1s/.*/$var/" test/t/a.py.tpl
 
