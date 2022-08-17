@@ -39,7 +39,7 @@ jobs:
     - name: Get hash
       id: vars
       run: |
-        cd FIM-C-DIVIS
+        cd test
         echo "::set-output name=sha::$(git rev-parse ${{ env.RELEASE_BRANCH }})"
     - name: Create tag
       uses: actions/github-script@v3
