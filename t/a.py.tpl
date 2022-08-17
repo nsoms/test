@@ -1,4 +1,4 @@
-# ($Format:%h$)
+# version
 
 print('Hello, world!')
 
