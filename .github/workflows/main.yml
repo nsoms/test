@@ -1,0 +1,65 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+
+# Controls when the action will run. 
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Release version, 3.4 for example'
+        required: true
+        default: '3.7'
+      branch:
+        description: 'Branch for the release'
+        required: true
+        default: 'master'
+
+env:
+  FIM_VERSION: ${{ github.event.inputs.release }}.${{ GITHUB.RUN_NUMBER }}.0
+
+  XP_BRANCH: ${{ github.event.inputs.branch }}-XP
+  
+  RELEASE_BRANCH: ${{ github.event.inputs.branch }}
+
+
+jobs:
+  Build-FIM-C-DIVIS-Ubuntu:
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        repository: nsoms/test
+        ref: ${{ env.RELEASE_BRANCH }}
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        path: test
+
+    - name: Get hash
+      id: vars
+      run: |
+        cd FIM-C-DIVIS
+        echo "::set-output name=sha::$(git rev-parse ${{ env.RELEASE_BRANCH }})"
+    - name: Create tag
+      uses: actions/github-script@v3
+      with:
+        github-token: ${{ secrets.PERSONAL_TOKEN }}
+        script: |
+          github.git.createRef({
+            owner: context.repo.owner,
+            repo: "test",
+            ref: "refs/tags/${{ env.FIM_VERSION }}",
+            sha: "${{ steps.vars.outputs.sha }}"
+          })
+
+    - name: Build archive
+      run: |
+           cd test
+           tar  -czf test_${{ env.FIM_VERSION }}.module.tar.gz test  
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: test_${{ env.FIM_VERSION }}.module.tar.gz
+        path: /home/runner/work/test/test/test_${{ env.FIM_VERSION }}.module.tar.gz
