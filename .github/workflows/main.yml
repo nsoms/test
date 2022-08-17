@@ -53,6 +53,11 @@ jobs:
             sha: "${{ steps.vars.outputs.sha }}"
           })
 
+    - name: Add commit hash to archive
+      run: |
+           var="# "`git log -n 1 --pretty=format:%h test/t/a.py.tpl`
+           sed -i "1s/.*/$var/" test/t/a.py.tpl
+
     - name: Build archive
       run: |
            tar  -czf test_${{ env.FIM_VERSION }}.module.tar.gz test
