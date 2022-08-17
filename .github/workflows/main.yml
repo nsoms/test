@@ -41,6 +41,18 @@ jobs:
       run: |
         cd test
         echo "::set-output name=sha::$(git rev-parse ${{ env.RELEASE_BRANCH }})"
+
+
+    - name: Add commit hash to archive
+      run: |
+           cd test
+           var="# "`git log -n 1 --pretty=format:%H t/a.py.tpl`
+           echo $var
+           cd ..
+           sed -i "1s/.*/$var/" test/t/a.py.tpl
+
+
+
     - name: Create tag
       uses: actions/github-script@v3
       with:
@@ -52,14 +64,6 @@ jobs:
             ref: "refs/tags/${{ env.FIM_VERSION }}",
             sha: "${{ steps.vars.outputs.sha }}"
           })
-
-    - name: Add commit hash to archive
-      run: |
-           cd test
-           var="# "`git log -n 1 --pretty=format:%H t/a.py.tpl`
-           echo $var
-           cd ..
-           sed -i "1s/.*/$var/" test/t/a.py.tpl
 
     - name: Build archive
       run: |
