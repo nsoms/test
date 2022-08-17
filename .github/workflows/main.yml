@@ -33,7 +33,7 @@ jobs:
       with:
         repository: nsoms/test
         ref: ${{ env.RELEASE_BRANCH }}
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         path: test
 
     - name: Get hash
@@ -44,7 +44,7 @@ jobs:
     - name: Create tag
       uses: actions/github-script@v3
       with:
-        github-token: ${{ secrets.PERSONAL_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           github.git.createRef({
             owner: context.repo.owner,
