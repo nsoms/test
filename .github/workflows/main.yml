@@ -55,7 +55,9 @@ jobs:
 
     - name: Add commit hash to archive
       run: |
-           var="# "`git log -n 1 --pretty=format:%h test/t/a.py.tpl`
+           cd test
+           var="# "`git log -n 1 --pretty=format:%h t/a.py.tpl`
+           cd ..
            sed -i "1s/.*/$var/" test/t/a.py.tpl
 
     - name: Build archive
