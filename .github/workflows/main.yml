@@ -35,6 +35,7 @@ jobs:
         ref: ${{ env.RELEASE_BRANCH }}
         token: ${{ secrets.GITHUB_TOKEN }}
         path: test
+        fetch-depth: 0
 
     - name: Get hash
       id: vars
