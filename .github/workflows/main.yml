@@ -55,9 +55,7 @@ jobs:
 
     - name: Build archive
       run: |
-           cd test
-           echo `pwd`
-           tar  -czf test_${{ env.FIM_VERSION }}.module.tar.gz ./
+           tar  -czf test_${{ env.FIM_VERSION }}.module.tar.gz test
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
